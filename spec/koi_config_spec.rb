@@ -11,6 +11,11 @@ describe KoiConfig do
         index :title => "Admin Index"
       end
     end
+    @proc_crud = KoiConfig::Config.new
+    @proc_crud.config do
+      index :title => Proc.new { "Hello I am a Proc" }
+      show  :title => lambda { "Hello I am a Lambda" }
+    end
   end
 
   describe "when asked about it type" do
@@ -67,6 +72,18 @@ describe KoiConfig do
       @crud.settings[:index].must_equal({ :title => "Changed Title",
                            :fields => [:id, :title, :publish_date, :description,
                                        :created_at, :updated_at] })
+    end
+  end
+
+  describe "when asked about a key value which is a proc" do
+   it "must respond by executing that proc" do
+      @proc_crud.find(:index, :title).must_equal("Hello I am a Proc")
+    end
+  end
+
+  describe "when asked about a key value which is a lambda" do
+   it "must respond by executing that lamba" do
+      @proc_crud.find(:show, :title).must_equal("Hello I am a Lambda")
     end
   end
 
