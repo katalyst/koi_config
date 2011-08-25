@@ -28,17 +28,6 @@ module KoiConfig
                             }))
     end
 
-    def namespace_value(hash={})
-      if @namespace.empty?
-        @settings.deep_merge!(hash)
-      else
-        namespace = @namespace.dup
-        lastkey = namespace.pop
-        subhash = namespace.inject(@settings) { |hash, k| hash[k] }
-        subhash[lastkey].deep_merge!(hash)
-      end
-    end
-
     def method_missing(sym, *args, &block)
       if sym.eql?(:config) && !args.empty?
         @namespace.push(args.first)
@@ -63,6 +52,19 @@ module KoiConfig
         current_val = current_val[attr_name]
       end
       return nil
+    end
+
+    private
+
+    def namespace_value(hash={})
+      if @namespace.empty?
+        @settings.deep_merge!(hash)
+      else
+        namespace = @namespace.dup
+        lastkey = namespace.pop
+        subhash = namespace.inject(@settings) { |hash, k| hash[k] }
+        subhash[lastkey].deep_merge!(hash)
+      end
     end
   end
 end

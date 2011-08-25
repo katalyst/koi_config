@@ -99,7 +99,7 @@ describe KoiConfig do
     end
   end
 
-  describe "when asked about a key value which is a proc" do
+  describe "when asked about a value which is a proc" do
     before do
       @proc_crud = KoiConfig::Config.new
       @proc_crud.config do
@@ -107,17 +107,19 @@ describe KoiConfig do
       end
     end
 
-    it "must respond by returning a proc" do
-      skip
-      title = "Hello I am a Proc"
-      proc_result = @proc_crud.find(:index, :title).call
-      proc_result.must_equal("#{title}")
+    def title
+      "Hello I am a Proc"
+    end
+
+    it "must respond by returning the stored proc" do
+      proc_method = @proc_crud.find(:index, :title)
+      result = instance_eval &proc_method
+      result.must_equal("#{title}")
     end
   end
 
   describe "when asked about an known nested hash key" do
     it "must respond with a the key value" do
-      skip
       @crud.find(:admin, :index, :title).must_equal("Admin Index")
     end
   end
@@ -130,7 +132,6 @@ describe KoiConfig do
 
   describe "when asked about an known nested hash key" do
     it "must respond with its value" do
-      skip
       @crud.find(:index, :title).must_equal "Index"
     end
   end
