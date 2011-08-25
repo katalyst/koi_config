@@ -4,3 +4,4 @@ Bundler.setup
 require 'koi_config'
 require 'minitest/autorun'
 require 'purdytest'
+require 'pry'

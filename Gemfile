@@ -8,6 +8,7 @@ group :test do
   gem 'minitest'
   gem 'guard-minitest'
   gem 'purdytest'
+  gem 'pry'
 
   if Config::CONFIG['target_os'] =~ /darwin/i
     gem 'rb-fsevent', '>= 0.3.2'
