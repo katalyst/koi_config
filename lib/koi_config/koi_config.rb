@@ -6,7 +6,7 @@ module KoiConfig
       @namespace = []
       @settings = Hash.new({})
       @settings = defaults || {
-        :ignore => [:id, :created_at, :updated_at, :cached_slug, :ordinal, :aasm_state],
+        :ignore => [:id, :created_at, :updated_at, :cached_slug, :slug, :ordinal, :aasm_state],
         :admin =>  { :ignore => [:id, :created_at, :updated_at, :cached_slug, :ordinal, :aasm_state] },
         :map => {
           :image_uid => :image,
