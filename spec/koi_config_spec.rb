@@ -22,8 +22,8 @@ describe KoiConfig do
   describe "when asked about it contents" do
     it "must respond with a content hash when no default is set" do
       @crud.settings.must_equal({
-        :ignore => [:id, :created_at, :updated_at, :cached_slug, :ordinal, :aasm_state],
-        :admin => { :ignore => [:id, :created_at, :updated_at, :cached_slug, :ordinal,
+        :ignore => [:id, :created_at, :updated_at, :cached_slug, :slug, :ordinal, :aasm_state],
+        :admin => { :ignore => [:id, :created_at, :updated_at, :cached_slug, :slug, :ordinal,
                     :aasm_state], :index => { :title => "Admin Index" } },
         :map => {
           :image_uid => :image,
@@ -54,11 +54,11 @@ describe KoiConfig do
       crud.settings.must_equal({
         :ignore => [:id],
         :index  => { :title => "Index",
-                     :fields => [:id, :title] 
+                     :fields => [:id, :title]
                    },
         :form   => { :new => "New Form",
                      :edit => "Edit Form",
-                     :fields => [:title, :description] 
+                     :fields => [:title, :description]
                    },
         :map    => {},
         :fields => {},
