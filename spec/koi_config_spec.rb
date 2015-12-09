@@ -13,6 +13,46 @@ describe KoiConfig do
     end
   end
 
+  describe "testing deeply nested namespaces" do
+    before do
+      @crud = KoiConfig::Config.new(defaults: { admin: { form: { fields: [:title] } } })
+    end
+
+    it "must respond with the default hash merged" do
+      @crud.settings.must_equal({
+        admin: {
+          form: {
+            fields: [:title]
+          },
+          ignore: []
+        },
+        ignore: [],
+        map: {},
+        fields: {}
+      })
+    end
+
+    it "must deep merge #config DSL settings" do
+      @crud.config do
+        config :admin do
+          form fields: [:description]
+        end
+      end
+
+      @crud.settings.must_equal({
+        admin: {
+          form: {
+            fields: [:title, :description]
+          },
+          ignore: []
+        },
+        ignore: [],
+        map: {},
+        fields: {}
+      })
+    end
+  end
+
   describe "when asked about it type" do
     it "must respond with a hash" do
       @crud.settings.must_be_instance_of Hash
@@ -22,8 +62,8 @@ describe KoiConfig do
   describe "when asked about it contents" do
     it "must respond with a content hash when no default is set" do
       @crud.settings.must_equal({
-        :ignore => [:id, :created_at, :updated_at, :cached_slug, :ordinal, :aasm_state],
-        :admin => { :ignore => [:id, :created_at, :updated_at, :cached_slug, :ordinal,
+        :ignore => [:id, :created_at, :updated_at, :cached_slug, :slug, :ordinal, :aasm_state],
+        :admin => { :ignore => [:id, :created_at, :updated_at, :cached_slug, :slug, :ordinal,
                     :aasm_state], :index => { :title => "Admin Index" } },
         :map => {
           :image_uid => :image,
@@ -54,11 +94,11 @@ describe KoiConfig do
       crud.settings.must_equal({
         :ignore => [:id],
         :index  => { :title => "Index",
-                     :fields => [:id, :title] 
+                     :fields => [:id, :title]
                    },
         :form   => { :new => "New Form",
                      :edit => "Edit Form",
-                     :fields => [:title, :description] 
+                     :fields => [:title, :description]
                    },
         :map    => {},
         :fields => {},
