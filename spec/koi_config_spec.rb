@@ -113,7 +113,7 @@ describe KoiConfig do
 
   describe "when merging another simple hash" do
    it "must respond with a merged hash" do
-      @crud.settings.deep_merge!({ :index => { :title => "Changed Title" } })
+      @crud.settings.deeper_merge!({ :index => { :title => "Changed Title" } })
       @crud.settings[:index].must_equal({ :title => "Changed Title",
                            :fields => [:id, :title] })
     end
@@ -121,7 +121,7 @@ describe KoiConfig do
 
   describe "when merging another hash with arrays" do
    it "must respond with a merged hash" do
-      @crud.settings.deep_merge!({ :index => { :title => "Changed Title",
+      @crud.settings.deeper_merge!({ :index => { :title => "Changed Title",
                                    :fields => [:description] } })
       @crud.settings[:index].must_equal({ :title => "Changed Title",
                            :fields => [:id, :title, :description] })
@@ -130,7 +130,7 @@ describe KoiConfig do
 
   describe "when merging another hash with arrays and strings" do
    it "must respond with a merged hash" do
-      @crud.settings.deep_merge!({ :index => { :title => "Changed Title",
+      @crud.settings.deeper_merge!({ :index => { :title => "Changed Title",
                                    :fields => [:publish_date, :description,
                                                :created_at, :updated_at] } })
       @crud.settings[:index].must_equal({ :title => "Changed Title",

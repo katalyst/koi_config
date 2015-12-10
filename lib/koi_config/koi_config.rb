@@ -22,7 +22,7 @@ module KoiConfig
     end
 
     def initialize(args={})
-      args.empty? ? setup : setup(args[:defaults].deep_merge!({
+      args.empty? ? setup : setup(args[:defaults].deeper_merge!({
                               :ignore => [], :admin => { :ignore => [] },
                               :map => {}, :fields => {}
                             }))
@@ -58,12 +58,12 @@ module KoiConfig
 
     def namespace_value(hash={})
       if @namespace.empty?
-        @settings.deep_merge!(hash)
+        @settings.deeper_merge!(hash)
       else
         namespace = @namespace.dup
         lastkey = namespace.pop
         subhash = namespace.inject(@settings) { |hash, k| hash[k] }
-        subhash[lastkey].deep_merge!(hash)
+        subhash[lastkey].deeper_merge!(hash)
       end
     end
   end
